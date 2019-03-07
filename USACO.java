@@ -38,8 +38,8 @@ public class USACO{
            }
          }
         biggest -= Integer.parseInt(data[2]);
-        for(int cowr = Integer.parseInt(data[0]) -1; cowr <Integer.parseInt(data[0]+ 2); cowr++){
-          for(int cowc = Integer.parseInt(data[1]) -1; cowr <Integer.parseInt(data[1 +2]); cowc++){
+        for(int cowr = Integer.parseInt(data[0]) -1; cowr <Integer.parseInt(data[0])+2; cowr++){
+          for(int cowc = Integer.parseInt(data[1]) -1; cowr <Integer.parseInt(data[1])+2; cowc++){
             if (field[cowr][cowc] > biggest){
               field[cowr][cowc] = biggest;
             }
