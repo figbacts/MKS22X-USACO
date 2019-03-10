@@ -30,8 +30,8 @@ public class USACO{
          int biggest = 0;
          for(int cowr = Integer.parseInt(data[0]) -1; cowr <Integer.parseInt(data[0]) +2; cowr++){
            for(int cowc = Integer.parseInt(data[1]) -1; cowc <Integer.parseInt(data[1]) +2; cowc++){
-             System.out.println(biggest + "\n" + field[cowr][cowc] + "\n");
-            System.out.println(cowr + " "+ cowc);
+             //System.out.println(biggest + "\n" + field[cowr][cowc] + "\n");
+             //System.out.println(cowr + " "+ cowc);
              if (field[cowr][cowc] > biggest){
                biggest = field[cowr][cowc];
              }
@@ -39,7 +39,7 @@ public class USACO{
          }
         biggest -= Integer.parseInt(data[2]);
         for(int cowr = Integer.parseInt(data[0]) -1; cowr <Integer.parseInt(data[0])+2; cowr++){
-          for(int cowc = Integer.parseInt(data[1]) -1; cowr <Integer.parseInt(data[1])+2; cowc++){
+          for(int cowc = Integer.parseInt(data[1]) -1; cowc <Integer.parseInt(data[1])+2; cowc++){
             if (field[cowr][cowc] > biggest){
               field[cowr][cowc] = biggest;
             }
@@ -48,13 +48,22 @@ public class USACO{
        }
        lines += 1;
 
-      System.out.println(line);
+      //System.out.println(line);
        }
-
      }
      catch(FileNotFoundException e){
        System.out.println("errrror");
      }
+     int vol =0;
+     for (int r =0; r < field.length; r++){
+       for (int c =0; c <field[r].length; c++){
+         if(elevation -field[r][c] > 0){
+           vol += elevation - field[r][c];
+         }
+       }
+     }
+     return vol * 5184;
+     /*
     System.out.println("\n");
      String ans = "";
      for (int r =0; r < field.length; r++){
@@ -67,9 +76,10 @@ public class USACO{
      System.out.println(ans);
 
    return -1;
+   */
   }
 
   public static void main(String[] args) {
-    bronze("bronze.txt");
+    System.out.println(bronze("bronze.txt"));
   }
 }
