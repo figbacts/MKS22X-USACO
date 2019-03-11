@@ -1,12 +1,10 @@
 import java.util.*;
 import java.io.*;
 public class USACO{
-  private static int[][] field;
-  private static int elevation;
-  private static int moves;
   public static int bronze(String filename){
-    elevation = -1;
-    moves = -1;
+    int elevation = -1;
+    int moves = -1;
+    int[][] field = new int[1][1];
     int lines = 1;
     String[] data;
      try{
@@ -78,8 +76,183 @@ public class USACO{
    return -1;
    */
   }
+  public static int silver(String filename){
+    int[][] grass = new int[1][1];
+    int [][] grassmove = new int[1][1];
+    int seconds = 0;
+    int startx = 0;
+    int starty = 0;
+    int endx = 0;
+    int endy = 0;
+    int lines = 1;
+    String[] data;
+     try{
+       File text = new File(filename);
+       Scanner stuff = new Scanner(text);
+       while(stuff.hasNextLine()){
+         String line = stuff.nextLine();
+         data = line.split(" ");
+         if (lines == 1){
+           grass = new int[Integer.parseInt(data[0])][Integer.parseInt(data[1])];
+           grassmove= new int[Integer.parseInt(data[0])][Integer.parseInt(data[1])];
+           seconds = Integer.parseInt(data[2]);
+         }
+         if(lines > 1 && lines <= grass.length +1){
+           for (int c = 0; c < line.length(); c++){
+             grass[lines-2][c] = line.charAt(c);
+             if(line.charAt(c) == '.'){
+               grass[lines-2][c] = 0;
+               grassmove[lines-2][c] = 0;
+             }
+             if (line.charAt(c) == '*'){
+               grass[lines-2][c] = -1;
+               grassmove[lines-2][c] = -1;
+             }
+           }
+         }
+         if (lines == grass.length +2){
+           startx = Integer.parseInt(data[0]);
+           starty = Integer.parseInt(data[1]);
+           endx = Integer.parseInt(data[2]);
+           endy = Integer.parseInt(data[3]);
+         }
+         lines += 1;
+  }
+}
+catch(FileNotFoundException e){
+  System.out.println("errrror");
+}
+System.out.println("\n");
+grass[startx-1][starty-1] = 1;
+while (seconds != 0){
+  for(int r = 0;r <grass.length-1; r++){
+    for(int c = 1; c < grass[r].length-1; c++){
+      if (r == 0){
+        if (grass[r][c] > 0 && grass[r+1][c]<1 && grass[r][c-1] <1 && grass[r][c+1]<1){
+          grassmove[r][c]= 0;
+        }
+        if(grass[r][c] == 0){
+          int plus = 0;
+          if (grass[r+1][c] >0){
+            plus += grass[r+1][c];
+          }
+          if (grass[r][c+1] >0){
+            plus += grass[r][c+1];
+          }
+          if (grass[r][c-1] >0){
+            plus += grass[r][c+1];
+          }
+          grassmove[r][c] = plus;
+        }
+      }
+      else{
+      if (r == grass.length-1){
+        if (grass[r][c] > 0 && grass[r-1][c] <1 && grass[r][c-1] <1 && grass[r][c+1]<1){
+          grassmove[r][c]= 0;
+        }
+        if(grass[r][c] == 0){
+          int plus = 0;
+          if (grass[r-1][c] >0){
+            plus += grass[r-1][c];
+          }
+          if (grass[r][c-1] >0){
+            plus += grass[r][c-1];
+          }
+          if (grass[r][c+1] >0){
+            plus += grass[r][c+1];
+          }
+          grassmove[r][c] = plus;
+        }
+      }
+      else{
+      if(c == 0){
+        if (grass[r][c] > 0 && grass[r-1][c] <1 && grass[r+1][c]<1 && grass[r][c+1]<1){
+          grassmove[r][c]= 0;
+        }
+        if(grass[r][c] == 0){
+          int plus = 0;
+          if (grass[r-1][c] >0){
+            plus += grass[r-1][c];
+          }
+          if (grass[r+1][c] >0){
+            plus += grass[r+1][c];
+          }
+          if (grass[r][c+1] >0){
+            plus += grass[r][c+1];
+          }
+          grassmove[r][c] = plus;
+        }
+      }
+      else{
+      if (c == grass.length -1){
+        if (grass[r][c] > 0 && grass[r-1][c] <1 && grass[r+1][c]<1 && grass[r][c-1] <1){
+          grassmove[r][c]= 0;
+        }
+        if(grass[r][c] == 0){
+          int plus = 0;
+          if (grass[r-1][c] >0){
+            plus += grass[r-1][c];
+          }
+          if (grass[r+1][c] >0){
+            plus += grass[r+1][c];
+          }
+          if (grass[r][c-1] >0){
+            plus += grass[r][c-1];
+          }
+          grassmove[r][c] = plus;
+        }
+      }
+      if (grass[r][c] > 0 && grass[r-1][c] <1 && grass[r+1][c]<1 && grass[r][c-1] <1 && grass[r][c+1]<1){
+        grassmove[r][c]= 0;
+      }
+      if(grass[r][c] == 0){
+        int plus = 0;
+        if (grass[r-1][c] >0){
+          plus += grass[r-1][c];
+        }
+        if (grass[r+1][c] >0){
+          plus += grass[r+1][c];
+        }
+        if (grass[r][c-1] >0){
+          plus += grass[r][c-1];
+        }
+        if (grass[r][c+1] >0){
+          plus += grass[r][c+1];
+        }
+        grassmove[r][c] = plus;
+      }
+    }
+  }
+    }
+    }
+  }
+  for(int r = 1;r <grass.length-1; r++){
+    for(int c = 1; c < grass[r].length-1; c++){
+      grass[r][c] = grassmove[r][c];
+    }
+  }
+  seconds -= 1;
+
+}
+System.out.println("\n");
+ String ans = "";
+ for (int r =0; r < grassmove.length; r++){
+   for (int c =0; c <grassmove[r].length; c++){
+     if (grass[r][c] > 9 || grass[r][c] < 0 ){
+       ans += " " + grass[r][c];
+     }
+     else{
+     ans += "  " + grass[r][c];
+   }
+ }
+   ans += "\n";
+ }
+ System.out.println(seconds + " " + startx + " " + starty + " " + endx + " " + endy);
+ System.out.println(ans);
+return  grass[endx-1][endy-1];
+}
 
   public static void main(String[] args) {
-    System.out.println(bronze("bronze.txt"));
+    System.out.println(silver("silver.txt"));
   }
 }
